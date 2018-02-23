@@ -948,7 +948,20 @@ void st_init()
   OCR1A = 0x4000;
   TCNT1 = 0;
 #else
-  TIM2->CR1 |= 0x01;
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+  TIM_TimeBaseStructure.TIM_Period        = 0xFFFF-1;
+  TIM_TimeBaseStructure.TIM_Prescaler     = 36-1;
+  TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+  TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+
+  NVIC_SetPriority(TIM2_IRQn, 1);
+  NVIC_EnableIRQ(TIM2_IRQn);
+
+//  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+  TIM2->CR1 |= 0x01; //TIM_Cmd(TIM2, ENABLE);
 #endif
   ENABLE_STEPPER_DRIVER_INTERRUPT();
 

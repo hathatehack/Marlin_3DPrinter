@@ -789,6 +789,23 @@ void tp_init()
   OCR0B = 128;
   TIMSK0 |= (1<<OCIE0B);  
 #else
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+  TIM_OCInitTypeDef TIM_OCInitStructure = {0,};
+
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+  TIM_TimeBaseStructure.TIM_Period        = 1000-1;//40000-1;  /*  */
+  TIM_TimeBaseStructure.TIM_Prescaler     = 600;//7200-1;//72-1;
+  TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+  TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
+  TIM_OCInitStructure.TIM_Pulse  = 999;//1;
+  TIM_OC2Init(TIM3, &TIM_OCInitStructure);
+  TIM_ARRPreloadConfig(TIM3, ENABLE);
+  TIM_ITConfig(TIM3, TIM_IT_CC2, ENABLE);
+
+  NVIC_SetPriority(TIM3_IRQn, 2);
+  NVIC_EnableIRQ(TIM3_IRQn);
   TIM3->CR1 |= 0x01;
 #endif
 
