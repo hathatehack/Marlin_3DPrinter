@@ -23,7 +23,7 @@
 ## Marlin flowchart
 <img src="./docs/MarlinFlowchart.png" style="zoom:100%;" />
 
-## How to use
+## How to start
 
 1. Importing this existing project into Eclipse CDT workspace.
 2. Make sure the cross toolchain path is modified to your own!
@@ -43,7 +43,11 @@ It's NOT a software bug, but some hardware adjustment must be done first:
 
 3. Then adjust the driving current of the stepping motors respectively until the nozzle is finally positioned at the center of the worktable!
 
-## Origin
+## Marlin Extension Project
+
+[2D Laser Printer](https://github.com/hathatehack/Marlin_2DLaser)
+
+## Marlin Origin
 
 - [github.com/MarlinFirmware/Marlin](https://github.com/MarlinFirmware/Marlin)
 - [marlinfw.org](https://marlinfw.org/)
