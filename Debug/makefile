@@ -49,38 +49,38 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
-Marlin.hex \
+Marlin_3DPrinter.hex \
 
 SECONDARY_SIZE += \
-Marlin.siz \
+Marlin_3DPrinter.siz \
 
 
 # All Target
-all: Marlin.elf secondary-outputs
+all: Marlin_3DPrinter.elf secondary-outputs
 
 # Tool invocations
-Marlin.elf: $(OBJS) $(USER_OBJS)
+Marlin_3DPrinter.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -T "../ldscripts/libs.ld" -T "../ldscripts/mem.ld" -T "../ldscripts/sections.ld" -Xlinker --gc-sections -Xlinker --cref -Xlinker --check-sections -Xlinker --unresolved-symbols=report-all -Xlinker --warn-common -Xlinker --warn-section-align -Xlinker --warn-unresolved-symbols -Wl,-Map,"Marlin.map" -v -o "Marlin.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g -T "../ldscripts/libs.ld" -T "../ldscripts/mem.ld" -T "../ldscripts/sections.ld" -Xlinker --gc-sections -Xlinker --cref -Xlinker --check-sections -Xlinker --unresolved-symbols=report-all -Xlinker --warn-common -Xlinker --warn-section-align -Xlinker --warn-unresolved-symbols -Wl,-Map,"Marlin_3DPrinter.map" -v -o "Marlin_3DPrinter.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-Marlin.hex: Marlin.elf
+Marlin_3DPrinter.hex: Marlin_3DPrinter.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	arm-none-eabi-objcopy -O ihex "Marlin.elf"  "Marlin.hex"
+	arm-none-eabi-objcopy -O ihex "Marlin_3DPrinter.elf"  "Marlin_3DPrinter.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Marlin.siz: Marlin.elf
+Marlin_3DPrinter.siz: Marlin_3DPrinter.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
-	arm-none-eabi-size --format=berkeley "Marlin.elf"
+	arm-none-eabi-size --format=berkeley "Marlin_3DPrinter.elf"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(SECONDARY_FLASH)$(SECONDARY_SIZE)$(ASM_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(CPP_DEPS) Marlin.elf
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(SECONDARY_FLASH)$(SECONDARY_SIZE)$(ASM_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(CPP_DEPS) Marlin_3DPrinter.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_SIZE)
